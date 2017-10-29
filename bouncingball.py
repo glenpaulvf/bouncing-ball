@@ -32,6 +32,7 @@ class BouncyBallWindow(QWidget):
     
     def draw(self, painter):
         painter.setPen(Qt.red)
+        painter.setBrush(Qt.red)
         painter.drawEllipse(self.x, self.y, self.diameter, self.diameter)
         painter.end()
 
