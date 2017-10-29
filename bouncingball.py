@@ -8,9 +8,9 @@ class BouncyBallWindow(QWidget):
         self.init_UI()
     
     def init_UI(self):
-        # Define window dimensions 600px by 400px
+        # Set window dimensions to 600px by 400px
         self.resize(600, 400)
-
+        
 
 def main():
     app = QApplication(sys.argv)
