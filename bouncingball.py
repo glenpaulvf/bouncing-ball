@@ -11,7 +11,9 @@ class BouncyBallWindow(QWidget):
         self.init_UI()
         
         # Ball properties
-        self.diameter = 30
+        self.launch = True
+        self.radius = 15
+        self.diameter = self.radius * 2
         self.x = 0 # x-coordinate
         self.y = 0 # y-coordinate
         self.velocity_x = 1 # x-component of velocity
@@ -26,7 +28,7 @@ class BouncyBallWindow(QWidget):
         pal.setColor(self.backgroundRole(), Qt.white)
         self.setAutoFillBackground(True)
         self.setPalette(pal)
-        
+
         # Move ball
         self.timer = QTimer()
         self.timer.timeout.connect(self.animate)
@@ -44,10 +46,23 @@ class BouncyBallWindow(QWidget):
         painter.drawEllipse(self.x, self.y, self.diameter, self.diameter)
     
     def animate(self):
+        self.checkCollision()
         self.x = self.x + self.velocity_x
         self.y = self.y + self.velocity_y
         self.update()
-            
+        self.launch = False
+        
+    def checkCollision(self):
+        
+        if self.height() - self.y <= self.diameter:
+            self.velocity_y = -self.velocity_y
+        elif self.width() - self.x <= self.diameter:
+            self.velocity_x = -self.velocity_x
+        if self.radius >= self.x + self.radius and not self.launch:
+            self.velocity_x = -self.velocity_x
+        elif self.radius >= self.y + self.radius and not self.launch:
+            self.velocity_y = -self.velocity_y
+
 
 def main():
     app = QApplication(sys.argv)
